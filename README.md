@@ -5,7 +5,7 @@
   elijahonchwari.me - Personal Website
 </h1>
 <p align="center">
-  The First iteration of <a href="https://elijahonchwari.me" target="_blank">elijahonchwari.me.com</a> built with <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a> and hosted with <a href="https://cloud.google.com/" target="_blank">GCP</a>
+  The First iteration of <a href="https://elijahonchwari.me" target="_blank">elijahonchwari.me</a> built with <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a> and hosted with <a href="https://cloud.google.com/" target="_blank">GCP</a>
 </p>
 <p align="center">
   <a href="https://app.netlify.com/sites/brittanychiang/deploys" target="_blank">
