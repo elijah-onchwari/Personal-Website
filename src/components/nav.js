@@ -114,7 +114,9 @@ const StyledLinks = styled.div`
           margin-right: 5px;
           color: var(--blueMunsell);
           font-size: var(--fz-xxs);
-          text-align: right;
+          position: absolute;
+          right: 0;
+          top: -0.75em;
         }
       }
     }

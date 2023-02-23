@@ -3,11 +3,12 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { navDelay, loaderDelay } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
-
+import { ScrollDown } from '@components/lottie';
 const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
   flex-direction: column;
-  align-items: flex-start;
+
+  align-items: center;
   min-height: 100vh;
   height: 100vh;
   padding: 0;
@@ -40,9 +41,26 @@ const StyledHeroSection = styled.section`
     max-width: 540px;
   }
 
-  .email-link {
-    ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 50px;
+  .center-botton-250{
+    display: flex;
+    align-items: flex-end;
+    align-self: center;
+    flex: 0 0 250px;
+  }
+
+
+  .center-botton-200{
+    display: flex;
+    align-items: flex-start;
+    align-self: center;
+    flex: 0 0 200;
+  }
+
+  .center-botton-100{
+    display: flex;
+    align-items: flex-end;
+    align-self: center;
+    flex: 0 0 150px;
   }
 `;
 
@@ -59,50 +77,59 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Elijah Onchwari.</h2>;
-  const three = <h3 className="big-heading">I build things for the web.</h3>;
-  const four = (
-    <>
-      <p>
-        I’m a software engineer specializing in building (and occasionally designing) exceptional
-        digital experiences. Currently, I’m focused on building accessible, human-centered products
-        at{' '}
-        <a href="https://upstatement.com/" target="_blank" rel="noreferrer">
-          Upstatement
-        </a>
-        .
-      </p>
-    </>
-  );
-  const five = (
-    <a
-      className="email-link"
-      href="https://www.newline.co/courses/build-a-spotify-connected-app"
-      target="_blank"
-      rel="noreferrer">
-      Check out my course!
+  const one = <h2 className="big-heading">ELIJAH ONCHWARI</h2>;
+  const two = <h3 className="small-heading">SOFTWARE & DEVEOPS ENGINEER</h3>;
+  // const four = (
+  //   <>
+  //     <p>
+  //       I’m a software engineer specializing in building (and occasionally designing) exceptional
+  //       digital experiences. Currently, I’m focused on building accessible, human-centered products
+  //       at{' '}
+  //       <a href="https://upstatement.com/" target="_blank" rel="noreferrer">
+  //         Upstatement
+  //       </a>
+  //       .
+  //     </p>
+  //   </>
+  // );
+  const three = (
+    <a href="#about">
+      <ScrollDown />
     </a>
+
   );
 
-  const items = [one, two, three, four, five];
+  const items = [one, two, three];
 
   return (
     <StyledHeroSection>
       {prefersReducedMotion ? (
         <>
-          {items.map((item, i) => (
-            <div key={i}>{item}</div>
+          {items.map((item, i, arr) => (
+            arr.length - 1 === i ? (<div className='scroll-down' key={i}>{item}</div>) : (<div key={i}>{item}</div>)
           ))}
         </>
       ) : (
         <TransitionGroup component={null}>
           {isMounted &&
-            items.map((item, i) => (
-              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
-                <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+            items.map((item, i, arr) => {
+              if (arr.length - 1 === i) {
+                return <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
+                  <div className='center-botton-100' style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+                </CSSTransition>
+              }
+
+              if (arr.length - 3 === i) {
+                return <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
+                  <div className='center-botton-250' style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+                </CSSTransition>
+              }
+
+              return <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
+                <div className='center-botton-200' style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
               </CSSTransition>
-            ))}
+
+            })}
         </TransitionGroup>
       )}
     </StyledHeroSection>
