@@ -5,11 +5,51 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  build:
+  run-ci:
+    name: Run Type Check & Linters
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Build site
-        run: npm run build
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.16
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies (with cache)
+        uses: bahmutov/npm-install@HEAD
+        with:
+          install-command: yarn --frozen-lockfile
+
+      - name: Check types
+        run: yarn run type-check
+
+      - name: Check linting
+        run: yarn run lint
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Caching Gatsby
+        id: gatsby-cache-build
+        uses: actions/cache@v2
+        with:
+          path: |
+            public
+            .cache
+            node_modules/.cache/babel-loader
+            node_modules/.cache/terser-webpack-plugin
+          key: ${{ runner.os }}-gatsby-build-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-gatsby-build-
+
+      - name: build
+        run: yarn build
