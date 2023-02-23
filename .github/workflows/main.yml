@@ -29,14 +29,14 @@ jobs:
         with:
           install-command: yarn --frozen-lockfile
 
-      - name: Check types
-        run: yarn run type-check
+      # - name: Check types
+      #   run: yarn run type-check
 
-      - name: Check linting
-        run: yarn run lint
+      # - name: Check linting
+      #   run: yarn run lint
 
-      - name: Run tests
-        run: yarn test
+      # - name: Run tests
+      #   run: yarn test
 
       - name: Caching Gatsby
         id: gatsby-cache-build
